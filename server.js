@@ -19,11 +19,12 @@ const io = require("socket.io")(httpServer, {
 });
 
 io.on("connection", (socket) => {
-  socket.on("joinGroup", (groupId) => {
-    // Join the room with the provided group ID
-    socket.join(groupId);
-    console.log(`Somebody just joined the ${groupId} group. `);
-  });
+  const id = socket.handshake.query.id;
+  if (id) {
+    socket.join(id);
+    console.log(`Somebody just joined the ${id} group. `);
+  }
+
   socket.on("joined", (groupId) => {
     socket.to(groupId).emit("join", "Hello from server!");
     console.log(`Received joined message from ${groupId}`);
