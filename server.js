@@ -22,15 +22,19 @@ io.on("connection", (socket) => {
   socket.on("joinGroup", (groupId) => {
     // Join the room with the provided group ID
     socket.join(groupId);
+    console.log(`Somebody just joined the ${groupId} group. `);
   });
   socket.on("joined", (groupId) => {
     socket.to(groupId).emit("join", "Hello from server!");
+    console.log(`Received joined message from ${groupId}`);
   });
   socket.on("ended", (groupId) => {
     socket.to(groupId).emit("end", "Ended");
+    console.log(`The meeting has ended ${groupId}`);
   });
   socket.on("started", (groupId) => {
     socket.to(groupId).emit("start", "Hello from server!");
+    console.log(`The meeting has started ${groupId}`);
   });
   socket.on("disconnect", () => {
     console.log("Client disconnected");
