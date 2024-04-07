@@ -25,10 +25,16 @@ io.on("connection", (socket) => {
     console.log(`Somebody just joined the ${id} group. `);
   }
 
-  socket.on("joined", (groupId) => {
-    socket.to(groupId).emit("join", "Hello from server!");
-    console.log(`Received joined message from ${groupId}`);
+  socket.on("joined", (data) => {
+    const groupId = data.tutoringSessionId; // Or however you access the tutoring session ID from the data object
+    const userId = data.userId; // Similarly, ensure this is how you get the user ID from the data object
+
+    socket
+      .to(groupId)
+      .emit("join", { message: "Hello from server!", userId: userId });
+    console.log(`User ${userId} joined group ${groupId}`);
   });
+
   socket.on("ended", (groupId) => {
     socket.to(groupId).emit("end", "Ended");
     console.log(`The meeting has ended ${groupId}`);
