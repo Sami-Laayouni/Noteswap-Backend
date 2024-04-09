@@ -40,7 +40,7 @@ io.on("connection", (socket) => {
       profile: profile,
     });
 
-    console.log(`User ${userId} joined group ${groupId}`);
+    console.log(`User ${firstName} joined group ${lastName}`);
   });
 
   socket.on("ended", (groupId) => {
