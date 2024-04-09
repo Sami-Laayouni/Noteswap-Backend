@@ -28,10 +28,18 @@ io.on("connection", (socket) => {
   socket.on("joined", (data) => {
     const groupId = data.tutoringSessionId; // Or however you access the tutoring session ID from the data object
     const userId = data.userId; // Similarly, ensure this is how you get the user ID from the data object
+    const firstName = data.firstName;
+    const lastName = data.lastName;
+    const profile = data.profile;
 
-    socket
-      .to(groupId)
-      .emit("join", { message: "Hello from server!", userId: userId });
+    socket.to(groupId).emit("join", {
+      message: "Hello from server!",
+      userId: userId,
+      firstName: firstName,
+      lastName: lastName,
+      profile: profile,
+    });
+
     console.log(`User ${userId} joined group ${groupId}`);
   });
 
